@@ -44,7 +44,10 @@ router.post(
   }),
   async (req, res) => {
     req.flash("success", "Welcome back to wanderlust !");
-    res.redirect(res.locals.redirectUrl);
+    let redirectUrl = res.locals.redirectUrl || "/listings";
+    //this is because if we directly try to login from /listings then the middleware in the middelware.js which is isloggedin is not being triggered so instead of redirecting to /lsitings we get redirected to undefined
+    //so if there is no res.locals.redirect the redirect to /listings
+    res.redirect(redirectUrl);
   }
 );
 
