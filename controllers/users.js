@@ -1,0 +1,52 @@
+const User = require("../models/user");
+
+//signup form route callback
+module.exports.renderSignupForm = (req, res) => {
+  res.render("users/signup.ejs");
+};
+
+//post or signup route call
+module.exports.signup = async (req, res) => {
+  try {
+    let { username, email, password } = req.body;
+    const newUser = new User({ email, username });
+    const registeredUser = await User.register(newUser, password);
+    console.log(registeredUser);
+    req.login(registeredUser, (err) => {
+      if (err) {
+        return next(err);
+      }
+      req.flash("success", "Welcome to wanderlust!");
+      res.redirect("/listings");
+    });
+  } catch (e) {
+    req.flash("error", e.message);
+    res.redirect("/signup");
+  }
+};
+
+//login form route callback
+module.exports.renderLoginForm = (req, res) => {
+  res.render("users/login.ejs");
+};
+
+//work after successfull login route callback
+//actual login is done by passport present as the middleware in this route
+module.exports.login = async (req, res) => {
+  req.flash("success", "Welcome back to wanderlust !");
+  let redirectUrl = res.locals.redirectUrl || "/listings";
+  //this is because if we directly try to login from /listings then the middleware in the middelware.js which is isloggedin is not being triggered so instead of redirecting to /lsitings we get redirected to undefined
+  //so if there is no res.locals.redirect the redirect to /listings
+  res.redirect(redirectUrl);
+};
+
+//logout route callback
+module.exports.logout = (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    req.flash("success", "you logged out!");
+    res.redirect("/listings");
+  });
+};
