@@ -119,6 +119,7 @@ body {
  /* we are giving our custom styling to out map , not the styling given in the docs */
 #map {
  height: 400px;
- width:  80vh;
+ /* width:  80vh; */
+ width: 100%;
   
 }
