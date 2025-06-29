@@ -23,6 +23,13 @@ router
 //new route
 router.get("/new", isLoggedIn, listingController.renderNewForm);
 
+
+//category route 
+router.get("/:category",(req,res)=>{
+  let { category} = req.params;
+  res.send(`welcome to ${category}`);
+})
+
 router
   .route("/:id")
   .get(wrapAsync(listingController.showListing)) //show route

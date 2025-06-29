@@ -9,15 +9,19 @@
     background-color: #fe424d;
     color: #fff;
   }
-  .search-btn i{
+  .search-btn i {
     display: inline;
     margin-right: 0.5rem;
   }
 
-  .search-inp{
+  .search-inp {
     border-radius: 25px;
     padding: 0.5rem 3rem 0.5rem 3rem;
     font-size: 1rem;
+  }
+  .navbar {
+    opacity: 0.9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   }
 </style>
 
@@ -51,11 +55,16 @@
         </form>
       </div>
       <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="/listings/new">Airbnb your home</a>
+        <a class="nav-link host" href="/listings/new">Become a host</a>
         <% if(!currUser){ %>
         <a class="nav-link" href="/signup"><b>Sign up</b></a>
         <a class="nav-link" href="/login"> <b>Log in</b></a>
-        <% } %><% if(currUser){ %>
+        <% } %> <% if(currUser){ %>
+        <div class="user">
+          <a href="/user/<%= currUser._id %>"
+            ><i class="fa-regular fa-circle-user"></i
+          ></a>
+        </div>
         <a class="nav-link" href="/logout">Logout</a>
         <% } %>
       </div>

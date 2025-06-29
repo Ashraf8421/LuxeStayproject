@@ -40,51 +40,90 @@
     display: flex;
     align-items: center;
   }
+
+  button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  outline: none;
+}
+button:focus {
+  outline: none;
+}
+
+.filter a {
+  text-decoration: none;
+  color: black;
+}
 </style>
 <div id="filters">
   <div class="filter">
-    <div><i class="fa-solid fa-fire"></i></div>
-    <p>Trending</p>
+    <a href="/listings/Trending">
+      <button type="button"><i class="fa-solid fa-fire"></i></button>
+      <p>Trending</p>
+    </a>
   </div>
   <div class="filter">
-    <div><i class="fa-solid fa-bed"></i></div>
-    <p>Rooms</p>
+    <a href="/listings/Rooms">
+      <button type="button"><i class="fa-solid fa-bed"></i></button>
+      <p>Rooms</p>
+    </a>
   </div>
   <div class="filter">
-    <div><i class="fa-solid fa-mountain-city"></i></div>
-    <p>Iconic Cities</p>
+    <a href="/listings/Iconic Cities">
+      <button type="button"><i class="fa-solid fa-mountain-city"></i></button>
+      <p>Iconic Cities</p>
+    </a>
   </div>
   <div class="filter">
-    <div><i class="fa-solid fa-mountain"></i></div>
-    <p>Mountains</p>
+    <a href="/listings/Mountains">
+      <button type="button"><i class="fa-solid fa-mountain"></i></button>
+      <p>Mountains</p>
+    </a>
   </div>
   <div class="filter">
-    <div><i class="fa-brands fa-fort-awesome"></i></div>
-    <p>Castles</p>
+    <a href="/listings/Castles">
+      <button type="button"><i class="fa-brands fa-fort-awesome"></i></button>
+      <p>Castles</p>
+    </a>
   </div>
   <div class="filter">
-    <div><i class="fa-solid fa-person-swimming"></i></div>
-    <p>Amazing Pools</p>
+    <a href="/listings/Amazing Pools">
+      <button type="button"><i class="fa-solid fa-person-swimming"></i></button>
+      <p>Amazing Pools</p>
+    </a>
   </div>
   <div class="filter">
-    <div><i class="fa-solid fa-campground"></i></div>
-    <p>Camping</p>
+    <a href="/listings/Camping">
+      <button type="button"><i class="fa-solid fa-campground"></i></button>
+      <p>Camping</p>
+    </a>
   </div>
   <div class="filter">
-    <div><i class="fa-solid fa-cow"></i></div>
-    <p>Farms</p>
+    <a href="/listings/Farms">
+      <button type="button"><i class="fa-solid fa-cow"></i></button>
+      <p>Farms</p>
+    </a>
   </div>
   <div class="filter">
-    <div><i class="fa-solid fa-snowflake"></i></div>
-    <p>Arctic</p>
+    <a href="/listings/Arctic">
+      <button type="button"><i class="fa-solid fa-snowflake"></i></button>
+      <p>Arctic</p>
+    </a>
   </div>
   <div class="filter">
-    <div><i class="fa-solid fa-igloo"></i></div>
-    <p>Domes</p>
+    <a href="/listings/Domes">
+      <button type="button"><i class="fa-solid fa-igloo"></i></button>
+      <p>Domes</p>
+    </a>
   </div>
   <div class="filter">
-    <div><i class="fa-solid fa-ship"></i></div>
-    <p>Boats</p>
+    <a href="/listings/Boats">
+      <button type="button"><i class="fa-solid fa-ship"></i></button>
+      <p>Boats</p>
+    </a>
   </div>
   <div class="tax-toggle">
     <div class="form-check-reverse form-switch">

@@ -14,7 +14,27 @@ body {
   height: 5rem;
   background-color: white;
 }
+.user {
+  margin-top: 0.4rem;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.user a {
+  text-decoration: none ;
+  color: black;
+}
 
+.user  i {
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.host{
+  margin-right: 2rem;
+}
 .fa-compass {
   color: #fe424d;
   font-size: 2rem;
@@ -23,6 +43,7 @@ body {
 .nav-link {
   color: #222222 !important;
 }
+
 
 /* footer */
 /* .f-info-links a {
@@ -57,6 +78,48 @@ body {
   justify-content: center;
   align-items: space-evenly;
 } */
+
+.f-info-socials{
+  margin-inline-start: auto;
+  display: flex;
+  align-items: center;
+  
+}
+
+.f-info-links , .f-info-brand{
+  display: flex;
+  align-items: center;
+}
+
+.f-info-brand{
+  margin-inline-start: 3rem ;
+}
+
+.f-info-links a {
+  font-size: 1rem;
+  text-decoration: none;
+  color: #000;
+  margin-inline-start: 3rem ;
+}
+.f-info-links a:hover{
+  text-decoration: underline;
+}
+
+.f-info-socials i {
+  font-style: normal;
+  font-size: 1.3rem;
+  margin-right: 3rem;
+}
+
+
+
+.f-info{
+  height: 5rem;
+  display: flex;
+  border-top: 1px solid rgba(0, 0, 0, 0.1)
+}
+
+
 
 /* cards */
 .listing-card {
@@ -121,5 +184,18 @@ body {
  height: 400px;
  /* width:  80vh; */
  width: 100%;
-  
+
 }
+
+/* user */
+ .profile{
+  border: none !important
+ }
+
+
+ .row .image {
+border-radius: 50% !important  
+}
+
+
+
