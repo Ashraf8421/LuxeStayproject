@@ -93,8 +93,8 @@
   <% } %>
 
   <div class="col-5 offset-2 mb-3">
-    <% if(currUser){ %>
-    <hr />
+    <% if(currUser && !currUser._id.equals(listing.owner._id)){ %>
+    <hr /> 
     <h4>Leave a Review</h4>
     <form
       action="/listings/<%= listing._id %>/reviews"
