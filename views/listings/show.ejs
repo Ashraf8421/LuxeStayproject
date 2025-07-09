@@ -3,14 +3,15 @@
 <script>
     const mapToken = "<%= process.env.MAP_TOKEN %>";
     const coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>;
-  // const listing = <%- JSON.stringify(listing) %>;
+    const price = <%- JSON.stringify(listing.price)%>;
+  //// const listing = //<--<%- JSON.stringify(listing) %>/-->/;
 </script>
 
 <div class="row mt-3">
-  <div class="col-8 offset-3">
+  <div class="col-5 offset-2">
     <h3><%= listing.title %></h3>
   </div>
-  <div class="card col-6 offset-3 show-card listing-card">
+  <div class="card col-5 offset-2 listing-card">
     <img
       src="<%= listing.image.url %>"
       class="card-img-top show-img"
@@ -18,7 +19,7 @@
     />
     <div class="card-body">
       <p class="card-text">
-        <i>Owner by : <%= listing.owner.username %></i>
+        <i>Hosted by : <%= listing.owner.username %></i>
       </p>
       <p class="card-text"><%= listing.description %></p>
       <p class="card-text">
@@ -27,6 +28,53 @@
       <p class="card-text"><%= listing.location %></p>
       <p class="card-text"><%= listing.country %></p>
     </div>
+  </div>
+
+  <div class="col-4 offset-1 booking d-flex flex-column " style="height: 20rem">
+    
+    <h3 style="text-decoration: underline;">
+      <i class="fa-solid fa-indian-rupee-sign"></i>&nbsp;
+      <span id="price-value"><%= listing.price.toLocaleString("en-IN") %></span>/night
+    </h3>
+    <p id="total-price" style="font-weight: bold; font-size: 1.2rem;">
+      Total for 1 night: ₹<%= listing.price.toLocaleString("en-IN") %>
+    </p>
+    <form
+      method="POST"
+      action="/user/booking/<%= listing._id %>"
+      novalidate
+      class=" needs-validation d-flex flex-column flex-grow-1"
+      style="flex: 1 1 auto"
+    >
+      <div class="date">
+        <div class="row">
+          <div class="col-6">
+            <!-- <p >Check-In Date</p> -->
+            <label for="CheckIn" class="form-label">Check-In</label>
+            <input type="date" name="booking[CheckIn]"  class="checkin form-control" required/>
+          </div>
+          <div class="col-6">
+            <!-- <p >Check-Out Date</p> -->
+            <label for="CheckOut" class="form-label">Check-Out</label>
+            <input type="date" name="booking[CheckOut]"  class="checkin form-control" required/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <label for="Adults" class=" form-label mt-2">No of Adults : </label>
+            <input type="number" name="booking[Adults]"  id="adults" placeholder="2" class="form-control"  required/>
+          </div>
+          <div class="col-6">
+            <label for="Children" class="form-label mt-2">No of Children : </label>
+            <input type="number" name="booking[Children]"   placeholder="2" class="form-control" required/>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-dark booking-btn mt-auto mx-auto mb-3">
+         <p style="font-size: 1.5rem;">Reserve</p>
+      </button>
+    </form>
   </div>
 
   <br />
@@ -44,7 +92,7 @@
   </div>
   <% } %>
 
-  <div class="col-8 offset-3 mb-3">
+  <div class="col-5 offset-2 mb-3">
     <% if(currUser){ %>
     <hr />
     <h4>Leave a Review</h4>
@@ -54,17 +102,6 @@
       novalidate
       class="needs-validation"
     >
-      <!-- <div class="mb-3 mt-3">
-      <label for="rating" class="form-label">Rating</label>
-      <input
-        type="range"
-        min="1"
-        max="5"
-        id="Rating"
-        name="review[rating]"
-        class="form-range"
-      />
-    </div> -->
       <div class="mb-3 mt-3">
         <label for="rating" class="form-label">Rating</label>
         <fieldset class="starability-slot">
@@ -157,10 +194,39 @@
     </div>
     <% } %>
   </div>
-  <div class="col-8 offset-3 mb-3">
+  <div class="col-5 offset-2 mb-3">
     <h3>Where you'll be</h3>
     <div id="map"></div>
   </div>
 </div>
+<script>
+  const pricePerNight = <%= listing.price %>;
+  const checkinInput = document.querySelector('input[name="booking[CheckIn]"]');
+  const checkoutInput = document.querySelector('input[name="booking[CheckOut]"]');
+  const totalPriceElement = document.getElementById('total-price');
+
+  function calculateAndUpdatePrice() {
+    const checkinDate = new Date(checkinInput.value);
+    const checkoutDate = new Date(checkoutInput.value);
+
+    let days = 1; // Default nights
+
+    if (checkinInput.value && checkoutInput.value && checkoutDate > checkinDate) {
+      const timeDiff = checkoutDate - checkinDate;
+      days = timeDiff / (1000 * 60 * 60 * 24); // Convert ms to days
+    }
+
+    const totalPrice = days * pricePerNight;
+    totalPriceElement.innerHTML = `Total for ${days} night${days > 1 ? 's' : ''}: ₹${totalPrice.toLocaleString("en-IN")}`;
+  }
+
+  // Initial load with default value
+  window.addEventListener('DOMContentLoaded', calculateAndUpdatePrice);
+
+  // Attach listeners
+  checkinInput.addEventListener('change', calculateAndUpdatePrice);
+  checkoutInput.addEventListener('change', calculateAndUpdatePrice);
+</script>
+
 <script src="/js/map.js"></script>
 <!-- the script tag written in the starting runs first and gives maptoken this script  -->

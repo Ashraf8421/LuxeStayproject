@@ -1,33 +1,44 @@
 const Listing = require("./models/listing");
 const Review = require("./models/review");
 const ExpressError = require("./utils/ExpressError.js");
-const { listingSchema , reviewSchema } = require("./schema.js");
+const { listingSchema, reviewSchema } = require("./schema.js");
 const review = require("./models/review.js");
-
 
 //checks login middleware
 
 //console.log(req.user);
-module.exports.isLoggedIn = (req, res, next) => {
-  //console.log(req.user);
-  //console.log(req.path,"..",req.originalUrl);
-  if (!req.isAuthenticated()) {
-    //save redirect url here
-    req.session.redirectUrl = req.originalUrl;
-    req.flash("error", "you must be logged in to create listing");
-    return res.redirect("/login");
-  }
-  next();
+module.exports.isLoggedIn = (customMsg) => {
+  return (req, res, next) => {
+    if (!req.isAuthenticated()) {
+      if (
+        req.method === "POST" &&
+        req.originalUrl.startsWith("/user/booking/")
+      ) {
+        const id = req.originalUrl.split("/").pop();
+        req.session.redirectUrl = `/listings/${id}`;
+      } else {
+        req.session.redirectUrl = req.originalUrl;
+      }
+      req.flash(
+        "error",
+        customMsg || "you must be logged in to create listing"
+      );
+      return res.redirect("/login");
+    }
+    next();
+  };
 };
+
+// module.exports.saveBookingInfo = (req,res,next)=>{
+//   const {id} = req.body;
+  
+   
+// }
 
 module.exports.saveRedirectUrl = (req, res, next) => {
   if (req.session.redirectUrl) {
     res.locals.redirectUrl = req.session.redirectUrl;
-    //this redirecturl is stored in the locals variable from auth middleware and this variable is accessed by every route so we redirect after the login page
   }
-  // else{
-  //   res.locals.redirectUrl = "/listings";
-  // }this logic is written in login route of user.js
   next();
 };
 
@@ -65,7 +76,7 @@ module.exports.validateReview = (req, res, next) => {
 
 //isReviewAuthor checking the review owner so he can only delete the review
 module.exports.isReviewAuthor = async (req, res, next) => {
-  let {id, reviewId } = req.params;
+  let { id, reviewId } = req.params;
   let review = await Review.findById(reviewId);
   if (!review.author.equals(res.locals.currUser._id)) {
     req.flash("error", "You are not the author of this review");

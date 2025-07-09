@@ -5,6 +5,10 @@ body {
   min-height: 100vh;
 }
 
+.plus-jakarta {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
 .container {
   flex: 1;
 }
@@ -43,6 +47,10 @@ body {
 .nav-link {
   color: #222222 !important;
 }
+
+/* login form  */
+
+
 
 
 /* footer */
@@ -127,28 +135,54 @@ body {
   margin-bottom: 2rem;
 }
 
+.booking-card{
+  width: 50rem !important;
+}
+
+.booking-img{
+  height: 16rem !important;
+}
+
+
 .card-img-top {
   border-radius: 1rem !important;
   width: 100% !important;
   object-fit: cover !important;
 }
 
+
+
 .card-body {
   padding: 0 !important ;
+  /* margin: auto; */
 }
 
-.card-text p {
+.card-text{
   font-weight: 400 !important;
+}
+.booking-text{
+  height: 12rem;
+  font-size: 1.5rem;
 }
 
 .listing-link {
   text-decoration: none;
 }
 
+
+
+.cancel{
+  margin-top: 3rem;
+}
+
+
 /* card effect */
 .card-img-overlay:hover {
-  opacity: 0.3;
-  background-color: white;
+  /* opacity: 0.3;
+  background-color: white; */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.5s ease;
+  border-radius: 1rem;
 }
 
 /* new page */
@@ -197,5 +231,128 @@ body {
 border-radius: 50% !important  
 }
 
+/* category */
+  #filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
 
+  .filter {
+    text-align: center;
+    margin-right: 2rem;
+    margin-top: 2rem;
+    opacity: 0.7;
+  }
+
+  .filter:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+
+  .filter p {
+    font-size: 0.8rem;
+  }
+
+  .tax-info {
+    display: none;
+  }
+
+  .tax-toggle{
+    border: 1px solid black;
+    border-radius: 1rem;
+    height: 3.25rem;
+    padding: 1rem;
+    margin-left: 2rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .filterbtn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  outline: none;
+}
+.filterbtn:focus {
+  outline: none;
+}
+
+.filter a {
+  text-decoration: none;
+  color : black
+}
+
+
+/* booking  */
+.booking {
+  height: 18rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  position: sticky;
+  /* top: 22.5rem; Adjust as needed for spacing from the top */
+  top : 6rem;
+  z-index: 10;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.booking-btn{
+  height: 3rem;
+  width: 25rem;
+  /* margin-top: 25rem;
+  margin-bottom: 1rem; */
+}
+
+
+
+input[type="date"] {
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.booking input[type="text"]{
+  border: none;
+  box-shadow: none;
+  outline: none;
+}
+
+
+.date > .row {
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.date > .row:first-child {
+  border-bottom: 1.5px solid #222;
+  width: 100%;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+.date{
+  border: solid black;
+  height: 10rem;
+  border-radius: 1rem;
+}
+
+.plus-jakarta {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+.big-btn {
+  font-size: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  /* background-color: #fe424d;
+  border: #fe424d; */
+}
 

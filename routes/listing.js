@@ -2,7 +2,13 @@ const express = require("express");
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
 const Listing = require("../models/listing.js");
-const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
+const Booking = require("../models/booking.js");
+const {
+  isLoggedIn,
+  isOwner,
+  validateListing,
+  saveRedirectUrl,
+} = require("../middleware.js");
 const listingController = require("../controllers/listings.js");
 const multer = require("multer");
 const { storage } = require("../cloudConfig.js");
@@ -12,41 +18,75 @@ const upload = multer({ storage });
 
 router
   .route("/")
-  .get(wrapAsync(listingController.index))//index route 
-  .post(//create route 
-    isLoggedIn,
+  .get(wrapAsync(listingController.index)) //index route
+  .post(
+    //create route
+    isLoggedIn(),
     upload.single("listing[image]"),
     validateListing,
     wrapAsync(listingController.createListing)
   );
 
+//search route
+router.get("/search",wrapAsync(async(req,res)=>{
+  let {place} = req.query;
+  let placeListings  = await Listing.find({country : place});
+  res.render("listings/search.ejs",{placeListings});
+}));
+
 //new route
-router.get("/new", isLoggedIn, listingController.renderNewForm);
-
-
-//category route 
-router.get("/:category",(req,res)=>{
-  let { category} = req.params;
-  res.send(`welcome to ${category}`);
-})
+router.get("/new", isLoggedIn(), listingController.renderNewForm);
 
 router
   .route("/:id")
-  .get(wrapAsync(listingController.showListing)) //show route
+  .get(saveRedirectUrl, wrapAsync(listingController.showListing)) //show route
   .put(
     //update route
-    isLoggedIn,
+    isLoggedIn(),
     isOwner,
     upload.single("listing[image]"),
     validateListing,
     wrapAsync(listingController.updateListing)
   )
-  .delete(isLoggedIn, isOwner, wrapAsync(listingController.destroyListing));//delete route 
+  .delete(isLoggedIn(), isOwner, wrapAsync(listingController.destroyListing)); //delete route
+
+//trending route
+router.get(
+  "/category/Trending",
+  wrapAsync(async (req, res) => {
+    let bookings = await Booking.find({}).populate("listing");
+    const unique = [];
+    const seen = new Set();
+
+    for (let item of bookings) {
+      if (!seen.has(item.listing)) {
+        seen.add(item.listing);
+        unique.push(item.listing);
+      }
+    } 
+    console.log(unique);
+    
+    res.render("listings/trending.ejs",{unique});
+  })
+);
+
+//catergory route
+router.get(
+  "/category/:category",
+  wrapAsync(async (req, res) => {
+    let { category } = req.params;
+    let listings = await Listing.find({ category });
+    if (listings.length == 0) {
+      return res.redirect("/listings");
+    }
+    res.render("listings/category.ejs", { listings });
+  })
+);
 
 //Edit route
 router.get(
   "/:id/edit",
-  isLoggedIn,
+  isLoggedIn(),
   isOwner,
   wrapAsync(listingController.renderEditForm)
 );

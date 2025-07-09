@@ -34,7 +34,8 @@ module.exports.showListing = async (req, res) => {
     req.flash("error", "Listing you requested for does not exist!");
     return res.redirect("/listings");
   }
-  console.log(listing);
+  // console.log(res.locals.bookingInfo);// getting undefined here
+  // const bookingInfo = res.locals.bookingInfo || {};
   res.render("listings/show.ejs", { listing });
 };
 

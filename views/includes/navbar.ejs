@@ -20,7 +20,6 @@
     font-size: 1rem;
   }
   .navbar {
-    opacity: 0.9;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
   }
 </style>
@@ -43,10 +42,11 @@
         <a class="nav-link" href="/listings">Explore</a>
       </div>
       <div class="navbar-nav ms-auto">
-        <form class="d-flex" role="search">
+        <form class="d-flex" role="search" action="/listings/search">
           <input
             class="form-control me-2 search-inp"
             type="search"
+            name="place"
             placeholder="Search destinations"
           />
           <button class="btn search-btn" type="submit">

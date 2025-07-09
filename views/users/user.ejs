@@ -12,12 +12,58 @@
             <p><b>Username :</b><%= currUser.username %></p>
             <p><b>Email :</b><%= currUser.email %></p>
       </p>
-      <a href="#" class="btn btn-primary">Edit Profile</a>
+      <!-- <a href="#" class="btn btn-primary">Edit Profile</a> -->
     </div>
   </div>
   <div class=" col-6 offset-2 mt-2">
-    <p><i class="fa-solid fa-house-chimney"></i>&nbsp; <b>My listed properties</b> </p>
+    <p style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 2rem;"><b>Your Reservations</b> </p>
+    <div class=" userBooking row row-cols-lg-2 row-cols-md-1 row-cols-sm-1 mt-3">
+      <% if(userBookings.length == 0){ %>
+        <p>You have no past revservations</p>
+        <br>
+        <div><form action="/listings" method="GET">
+          <button class="btn btn-primary big-btn">Make a Reservation</button>
+        </form></div>
+        
+      <% } %>
+      <% for(let booking of userBookings) { %>
+        <div class="card col listing-card booking-card">
+          <img
+            src="<%= booking.listing.image.url %>"
+            class="card-img-top booking-img"
+            alt="listing_image"
+            style="height: 20rem"
+          />
+          
+          <div class=" booking-body card-body booking-text">
+            <div class="row">
+              <div class="col-6 ">
+                <p class="card-text">
+                <b><%= booking.listing.title %></b>
+                </p>
+                <p><b>Location :</b><%= booking.listing.location %></p>
+                <p> <b>Price :</b> <%= booking.price %>/- for  <%= booking.days %>days </p>
+              </div>
+              <div class="col-6 cancel">
+                <form action="/user/booking/delete/<%= booking._id %>?_method=DELETE" method="POST">
+                  <button class="btn btn-primary big-btn">Cancel Booking</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% } %>
+      
+    </div>
+    <p style="margin-top: 2rem; font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 2rem;"><i class="fa-solid fa-house-chimney"></i>&nbsp; <b>My listed properties</b> </p>
     <div class="row row-cols-lg-2 row-cols-md-1 row-cols-sm-1 mt-3">
+      <% if(listings.length == 0){ %>
+        
+        <p style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 2rem;">You have no properties to host</p>
+        <form action="/listings/new" method="GET">
+          <button class="btn btn-primary big-btn">Host your property</button>
+        </form>
+      <% } %>
       <% for(let listing of listings) { %>
       <a href="/listings/<%= listing._id %>" class="listing-link">
         <div class="card col listing-card">
@@ -38,8 +84,11 @@
       </a>
     </div>
     <div class="row">
-      <p><i class="fa-regular fa-message"></i>&nbsp;<b>Reviews i have written</b></p>
-      <% for (let review of reviews) { 
+      <p style="font-family: 'Plus Jakarta Sans', sans-serif !important; font-size: 2rem;"><i class="fa-regular fa-message"></i>&nbsp;<b>Reviews by you</b></p>
+      <% if(reviews.length == 0){ %>
+        <p>No reviews written  by you</p>
+      <% } %>
+      <div class="row"><% for (let review of reviews) { 
         // Find the listing that contains this review
         let parentListing = reviewListings.find(listing => 
           listing.reviews.some(rid => rid.toString() === review._id.toString())
@@ -59,7 +108,8 @@
          </form>
        </div>
      </div>
-   <% } %>
+   <% } %></div>
+      
     </div>
   </div>
 </div>
